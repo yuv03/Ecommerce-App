@@ -25,7 +25,7 @@ const Cart = () => {
     <View style={styles.amount}>
     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
       <Text style={{margin:10}}>Subtotal</Text>
-      <Text style={{margin:10}}>{totalPrice}</Text>
+      <Text style={{margin:10}}>${totalPrice}</Text>
     </View>
     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
       <Text style={{margin:10}}>Delivery</Text>

@@ -3,8 +3,9 @@ import { View, Text, FlatList, Image, StyleSheet, Dimensions, ScrollView, Toucha
 import Carousel from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating-widget';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { addToCart } from '../redux/cartReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -27,12 +28,23 @@ const Product = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
   const handleAddToCart = (product) => {dispatch(addToCart(product))}
+  const cartProducts = useSelector(state => state.cart.items)
 
   return (
     <View>
-    <TouchableOpacity onPress={()=>navigation.goBack()}>
-    <MaterialIcons name={'keyboard-backspace'} size={30} color={'black'} />
-    </TouchableOpacity>
+      <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
+        <TouchableOpacity onPress={()=>navigation.goBack()}>
+          <MaterialIcons name={'keyboard-backspace'} size={30} color={'black'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+            <View style={styles.cartContainer}>
+              <Icon name="shopping-bag" size={24} color="black" />
+              { cartProducts.length> 0 ? <Text style={styles.cartCount}>{cartProducts.length}</Text>: 
+              null}
+            </View>
+          </TouchableOpacity>
+      </View>
+
     <ScrollView showsVerticalScrollIndicator={false}>
     
     <View style={styles.titleContainer}>
@@ -96,6 +108,20 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent:'center',
     alignItems:'center',
+  },
+  cartContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // marginTop: 52,
+    marginRight: 10
+  },
+  cartCount: {
+    backgroundColor: 'red',
+    color: 'white',
+    borderRadius: 10,
+    marginLeft: 5,
+    padding: 2,
+    fontSize: 12,
   },
   image: {
     width: '100%',
